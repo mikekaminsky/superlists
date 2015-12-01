@@ -62,7 +62,7 @@ class NewVisitorTest(LiveServerTestCase):
         ## We use a new browsesr session to make sure that no information
         ## of the first user's is coming through from cookies etc.
         self.browser.quit()
-        self.browser.webdriver.Firefox()
+        self.browser = webdriver.Firefox()
 
         # The second user visits the home page, and there is no sign of user 1's lisquit()t
         self.browser.get(self.live_server_url)
@@ -76,7 +76,7 @@ class NewVisitorTest(LiveServerTestCase):
         inputbox.send_keys(Keys.ENTER)
 
         user2_list_url = self.browser.current_url
-        self.assertRegex(user2_list_url, '/lists/.+')
+        self.assertRegexpMatches(user2_list_url, '/lists/.+')
         self.assertNotEqual(user_list_url, user2_list_url)
 
         # Double check there's no trace of user 1's list
