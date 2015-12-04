@@ -59,7 +59,7 @@ class NewVisitorTest(LiveServerTestCase):
 
         # Now a new user, user2, comes along to the site
 
-        ## We use a new browsesr session to make sure that no information
+        ## We use a new browser session to make sure that no information
         ## of the first user's is coming through from cookies etc.
         self.browser.quit()
         self.browser = webdriver.Firefox()
@@ -83,4 +83,59 @@ class NewVisitorTest(LiveServerTestCase):
         page_text = self.browser.find_element_by_tag_name('body').text
         self.assertNotIn('Buy peacock feathers', page_text)
         self.assertNotIn('make a fly', page_text)
+
+    def test_layout_and_styling(self):
+        # User goes to the home page
+        self.browser.get(self.live_server_url)
+        self.browser.set_window_size(1024, 768)
+
+        # They notices the input box is nicely centered
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        self.assertAlmostEqual(
+            inputbox.location['x'] + inputbox.size['width'] / 2, 
+            512, 
+            delta = 5
+        )
+
+        # They start a new list and see the input is centered
+        # there too.
+        inputbox.send_keys('testing\n')
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        self.assertAlmostEqual(
+            inputbox.location['x'] + inputbox.size['width'] / 2, 
+            512, 
+            delta = 5
+        )
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
